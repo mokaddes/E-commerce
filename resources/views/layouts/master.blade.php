@@ -454,8 +454,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <script>
         @if(Session::has('message'))
@@ -479,50 +479,75 @@
     <script>
         $(document).on("click", "#delete", function(e){
             e.preventDefault();
-            // var link = $(this).attr("type");
-            // swal({
-            //     title: "Are you want to delete?",
-            //     text: "This will be permanently Delete!",
-            //     icon: "warning",
-            //     buttons: true,
-            //     dangerMode: true,
-            // })
-            // .then((willDelete) => {
-            //     if (willDelete) {
-            //         document.getElementById('form').submit();
-            //     }else {
-            //         swal("Safe Data!")
+            var link = $(this).attr("href");
+            swal({
+                title: "Are you want to delete?",
+                text: "This will be permanently Delete!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    document.getElementById("form").submit();
+                    // window.location.href = link;
+                }else {
+                    swal("Safe Data!")
+                }
+            });
+            // swal.fire({
+            //     title: 'Are you sure?',
+            //     text: "You won't be able to revert this!",
+            //     icon: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonText: 'Yes, delete it!',
+            //     cancelButtonText: 'No, cancel!',
+            //     reverseButtons: true
+            //     }).then((result) => {
+            //     if (result.isConfirmed) {
+            //         document.getElementById("form").submit();
+            //         // swal.fire(
+            //         // 'Deleted!',
+            //         // 'Your file has been deleted.',
+            //         // 'success'
+            //         // )
+            //     } else if (
+            //         /* Read more about handling dismissals below */
+            //         result.dismiss === Swal.DismissReason.cancel
+            //     ) {
+            //         swal.fire(
+            //         'Cancelled',
+            //         'Your Data is safe :)',
+            //         'error'
+            //         )
             //     }
             // });
-            swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('form').submit();
-                    // swal.fire(
-                    // 'Deleted!',
-                    // 'Your file has been deleted.',
-                    // 'success'
-                    // )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swal.fire(
-                    'Cancelled',
-                    'Your Data is safe :)',
-                    'error'
-                    )
+        });
+    </script>
+
+
+    <script>
+        $(document).on("click", "#adelete", function(e){
+            e.preventDefault();
+            var link = $(this).attr("href");
+            swal({
+                title: "Are you want to delete?",
+                text: "This will be permanently Delete!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // document.getElementById("form").submit();
+                    window.location.href = link;
+                }else {
+                    swal("Safe Data!")
                 }
             });
         });
     </script>
+
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> --}}
 
 

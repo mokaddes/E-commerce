@@ -3,33 +3,49 @@
     Edit Products
 @endsection
 @section('content')
-    <form action=" {{route('products.store')}} " method="post" enctype="multipart/form-data">
+    <form action=" {{route('products.update', $product->id)}} " method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="card pd-20 pd-sm-40">
             <h6 class="card-body-title">Edit Product
                 <a href=" {{ route('products.index') }} " class=" btn btn-sm btn-success pull-right">Back</a>
             </h6>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
 
             <div class="form-layout mg-t-25">
               <div class="row mg-b-25">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
                     <input class="form-control" type="text" name="product_name" value=" {{ $product->product_name }} ">
                   </div>
                 </div><!-- col-4 -->
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label">Product Code: <span class="tx-danger">*</span></label>
                     <input class="form-control" type="text" name="product_code"  value=" {{ $product->product_code }}">
                   </div>
                 </div><!-- col-4 -->
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label">Product Quantity: <span class="tx-danger">*</span></label>
                     <input class="form-control" type="text" name="product_quantity"  value=" {{ $product->product_quantity }} ">
                   </div>
                 </div><!-- col-4 -->
+                <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label">Discount Price: <span class="tx-danger">*</span></label>
+                      <input class="form-control" type="text" name="discount_price"  value=" {{ $product->discount_price }} ">
+                    </div>
+                  </div><!-- col-4 -->
                 <div class="col-lg-4">
                   <div class="form-group mg-b-10-force">
                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
@@ -105,80 +121,123 @@
                     </div>
                 </div><!-- col-4 -->
                 <div class="col-lg-4">
-                    <div class="form-group">
-                        <label class="form-control-label">Image One: <span class="tx-danger">*</span></label>
-                        <label class="custom-file">
-                            <input type="file" name="image_one" class="custom-file-input" >
-                            <span class="custom-file-control"></span>
-                            @if ($product->image_one)
-                            <img src="{{ asset($product->image_one) }}" >
-                            @elseif ($(this).on('change',readURL(this)))
-                            <img src="#" id="one">
-                            @endif
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label class="form-control-label">Image Two: <span class="tx-danger">*</span></label>
-                        <label class="custom-file">
-                            <input type="file" name="image_two" class="custom-file-input" onchange="readURL2(this);">
-                            <span class="custom-file-control"></span>
-                            <img src="#"  id="two">
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label class="form-control-label">Image Three: <span class="tx-danger">*</span></label>
-                        <label class="custom-file">
-                            <input type="file" name="image_three" class="custom-file-input" onchange="readURL3(this);">
-                            <span class="custom-file-control"></span>
-                            <img src="#"  id="three">
-                        </label>
-                    </div>
-                </div>
-              </div><!-- row -->
-              <hr>
-              <br><br>
-              <div class="row">
-                <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="main_slider">
+                        <input type="checkbox" value="1" name="main_slider"
+                        @if ($product->main_slider == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Main Slider</span>
                     </label>
                 </div>
                 <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="hot_deal">
+                        <input type="checkbox" value="1" name="hot_deal"
+                        @if ($product->hot_deal == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Hot Deal</span>
                     </label>
                 </div>
                 <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="best_rated">
+                        <input type="checkbox" value="1" name="best_rated"
+                        @if ($product->best_rated == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Best Rated</span>
                     </label>
                 </div>
                 <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="mid_slider">
+                        <input type="checkbox" value="1" name="mid_slider"
+                        @if ($product->mid_slider == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Mid Slider</span>
                     </label>
                 </div>
                 <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="hot_new">
+                        <input type="checkbox" value="1" name="hot_new"
+                        @if ($product->hot_new == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Hot New</span>
                     </label>
                 </div>
                 <div class="col-lg-4">
                     <label class="ckbox">
-                        <input type="checkbox" value="1" name="trend">
+                        <input type="checkbox" value="1" name="trend"
+                        @if ($product->trend == 1)
+                            {{ "checked" }}
+                        @endif
+                        >
                         <span>Trend</span>
                     </label>
                 </div>
-              </div>
+
+              </div><!-- row -->
+              <hr>
+              <br><br>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Image One: <span class="tx-danger">*</span></label>
+                                <br>
+                                <label class="custom-file">
+                                    <input type="file" name="image_one" class="custom-file-input" onchange="readURL(this);">
+                                    <span class="custom-file-control"></span>
+                                    <input type="hidden" name="old_one" value="{{ $product->image_one }}">
+                                </label>
+                                <br>
+                                <img src="#"  id="one" class="d-none">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            <img src="{{ asset($product->image_one) }}" width="80px" height="70px"  >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Image Two: <span class="tx-danger">*</span></label>
+                                <br>
+                                <label class="custom-file">
+                                    <input type="file" name="image_two" class="custom-file-input" onchange="readURL2(this);">
+                                    <span class="custom-file-control"></span>
+                                    <input type="hidden" name="old_three" value="{{ $product->image_three }}">
+                                </label>
+                                <br>
+                                <img src="#"  id="two" class="d-none">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            <img src="{{ asset($product->image_two) }}" width="80px" height="70px"  >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Image Three: <span class="tx-danger">*</span></label>
+                                <br>
+                                <label class="custom-file">
+                                    <input type="file" name="image_three" class="custom-file-input" onchange="readURL3(this);">
+                                    <span class="custom-file-control"></span>
+                                    <input type="hidden" name="old_three" value="{{ $product->image_three }}">
+                                </label>
+                                <br>
+                                <img src="#"  id="three" class="d-none">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            <img src="{{ asset($product->image_three) }}" width="80px" height="70px"  >
+                        </div>
+                    </div>
               <br>
               <br>
               <div class="form-layout-footer">
@@ -228,7 +287,8 @@
                 $('#one')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }
@@ -242,7 +302,8 @@
                 $('#two')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }
@@ -256,7 +317,8 @@
                 $('#three')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }

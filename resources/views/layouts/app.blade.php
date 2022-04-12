@@ -7,13 +7,14 @@
 <meta name="description" content="OneTech shop project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/bootstrap4/bootstrap.min.css')}}">
-<link href="{{asset('forntend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css')}}">
+<link href="{{asset('forntend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/slick-1.8.0/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/main_styles.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/responsive.css')}}">
+
 
 </head>
 
@@ -54,11 +55,30 @@
 									</li>
 								</ul>
 							</div>
-							<div class="top_bar_user">
-								<div class="user_icon"><img src="{{asset('forntend/images/user.svg')}}" alt=""></div>
-								<div><a href=" {{ route('register') }} ">Register</a></div>
-								<div><a href=" {{ route('login') }} ">Sign in</a></div>
-							</div>
+                            @if (Auth::user())
+                                <div class="top_bar_user">
+                                    <ul class="standard_dropdown top_bar_dropdown">
+
+                                        <li>
+                                            <a href="#"><div class="user_icon"><img src="{{asset('forntend/images/user.svg')}}" alt=""></div>{{Auth::user()->name}}<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li><a href=" {{ route('logout') }} " onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();"><i class="icon ion-power"></i> Sign Out</a>
+                                                </li>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @else
+                                <div class="top_bar_user">
+                                    <div class="user_icon"><img src="{{asset('forntend/images/user.svg')}}" alt=""></div>
+                                    <div><a href=" {{ route('register') }} ">Register</a></div>
+                                    <div><a href=" {{ route('login') }} ">Sign in</a></div>
+                                </div>
+                            @endif
 						</div>
 					</div>
 				</div>
@@ -118,18 +138,60 @@
 							</div>
 
 							<!-- Cart -->
-							<div class="cart">
-								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
-									<div class="cart_icon">
-										<img src="{{asset('forntend/images/cart.png')}}" alt="">
-										<div class="cart_count"><span>10</span></div>
-									</div>
-									<div class="cart_content">
-										<div class="cart_text"><a href="#">Cart</a></div>
-										<div class="cart_price">$85</div>
-									</div>
-								</div>
-							</div>
+
+                            <div class="dropdown">
+                                <div data-toggle="dropdown">
+                                    <div class="cart">
+                                        @php $total = 0 @endphp
+                                        @foreach((array) session('cart') as $id => $details)
+                                            @php $total += $details['price'] * $details['quantity'] @endphp
+                                        @endforeach
+                                        <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                                            <div class="cart_icon">
+                                                <img src="{{asset('forntend/images/cart.png')}}" alt="">
+                                                <div class="cart_count"><span>{{ count((array) session('cart')) }}</span></div>
+                                            </div>
+                                            <div class="cart_content">
+                                                <div class="cart_text"><a href="#">Cart</a></div>
+                                                <div class="cart_price">$ {{ $total }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <div class="row total-header-section">
+                                        <div class="col-lg-6 col-sm-6 col-6">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                        </div>
+                                        @php $total = 0 @endphp
+                                        @foreach((array) session('cart') as $id => $details)
+                                            @php $total += $details['price'] * $details['quantity'] @endphp
+                                        @endforeach
+                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                            <p>Total: <span class="text-info">$ {{ $total }}</span></p>
+                                        </div>
+                                    </div>
+                                    @if(session('cart'))
+                                        @foreach(session('cart') as $id => $details)
+                                            <div class="row cart-detail">
+                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                                    <img src="{{ $details['image'] }}" width="60px" />
+                                                </div>
+                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                    <p>{{ $details['name'] }}
+                                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                                            <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -256,7 +318,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</div>
 </div>
 
-<script src="{{asset('forntend/js/jquery-3.3.1.min.js')}}"></script>
+{{-- <script src="{{asset('forntend/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('forntend/styles/bootstrap4/popper.js')}}"></script>
 <script src="{{asset('forntend/styles/bootstrap4/bootstrap.min.js')}}"></script>
 <script src="{{asset('forntend/plugins/greensock/TweenMax.min.js')}}"></script>
@@ -267,7 +329,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{{asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
 <script src="{{asset('forntend/plugins/slick-1.8.0/slick.js')}}"></script>
 <script src="{{asset('forntend/plugins/easing/easing.js')}}"></script>
-<script src="{{asset('forntend/js/custom.js')}}"></script>
+<script src="{{asset('forntend/js/custom.js')}}"></script> --}}
+<script src="{{ asset('forntend/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('forntend/styles/bootstrap4/popper.js') }}"></script>
+<script src="{{ asset('forntend/styles/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/greensock/TweenMax.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/greensock/TimelineMax.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/greensock/animation.gsap.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
+<script src="{{ asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+<script src="{{ asset('forntend/plugins/slick-1.8.0/slick.js') }}"></script>
+<script src="{{ asset('forntend/plugins/easing/easing.js') }}"></script>
+<script src="{{ asset('forntend/js/custom.js') }}"></script>
+
 </body>
 
 </html>

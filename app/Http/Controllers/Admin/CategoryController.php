@@ -110,12 +110,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        $notify = array(
-            'message' => 'Category Deleted Successfully',
-            'alert-type' => 'warning'
-        );
-        return redirect()->route('categories.index')->with($notify);
+        // $category->delete();
+        // $notify = array(
+        //     'message' => 'Category Deleted Successfully',
+        //     'alert-type' => 'warning'
+        // );
+        // return redirect()->route('categories.index')->with($notify);
     }
 
     public function search(Request $request)

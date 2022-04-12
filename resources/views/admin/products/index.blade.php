@@ -54,26 +54,21 @@
                     <td>{{ $product->selling_price }}</td>
                     <td>
                         @if ($product->status == 1)
-                            <span class="badge badge-success">Active</span>
+                            <a href="{{ URL::to('inactive/product/'. $product->id) }}" class="badge badge-success">Active</a>
                         @else
-                            <span class="badge badge-danger">Inactive</span>
+                            <a href="{{ route('products.active', $product->id) }}" class="badge badge-danger">Inactive</a>
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" id="form">
-
+                        <form action="" method="post">
                             <a class="btn btn-primary" href="{{ route('products.show', $product->id) }}"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}"><i class="fa fa-edit"></i></a>
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button class="btn btn-danger" id="delete"><i class="fa fa-trash"></i></button>
-                            @if ($product->status == 1)
-                                <a class="btn btn-primary" href="{{ URL::to('inactive/product/'. $product->id) }}"><i class="fa fa-thumbs-up"></i></a>
-                            @else
-                                <a class="btn btn-primary" href="{{ route('products.active', $product->id) }}"><i class="fa fa-thumbs-down"></i></a>
-                        @endif
+                            <a href="{{ URL::to('products/delete/'. $product->id) }}" class="btn btn-danger" id="adelete"><i class="fa fa-trash"></i></a>
+                            {{-- @if ($product->status == 1)
+                            <a class="btn btn-primary" href="{{ URL::to('inactive/product/'. $product->id) }}"><i class="fa fa-thumbs-up"></i></a>
+                             @else
+                            <a class="btn btn-primary" href="{{ route('products.active', $product->id) }}"><i class="fa fa-thumbs-down"></i></a>
+                            @endif --}}
                         </form>
                     </td>
                 </tr>
@@ -86,4 +81,7 @@
       </div><!-- card -->
     </div><!-- sl-pagebody -->
 
+
     @endsection
+
+

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ProductshowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +25,22 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
-    return view('forntend.index');
-})->name('frontend');
+// Route::get('/', function () {
+//     return view('forntend.index');
+// })->name('frontend');
+
+
 
 Route::post('store/newslaters', [NewslaterController::class, 'store'])->name('news.store');
 
 Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::resource('/', ProductshowController::class);
+Route::resource('index', ProductshowController::class);
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('cart', [ProductshowController::class, 'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [ProductshowController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [ProductshowController::class, 'update'])->name('update.cart');
+Route::delete('remove-from-cart', [ProductshowController::class, 'remove'])->name('remove.from.cart');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
@@ -47,6 +55,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('coupons', CouponController::class);
     Route::resource('newslaters', NewslaterController::class);
     Route::resource('products', ProductController::class);
+    Route::get('products/delete/{product}', [ProductController::class, 'delete']);
     Route::get('get/subcategory/{category_id}', function ($category_id) {
         $cat = DB::table('subcategories')->where('category_id', $category_id)->get();
         return json_encode($cat);

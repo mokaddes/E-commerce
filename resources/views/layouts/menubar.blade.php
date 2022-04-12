@@ -1,3 +1,8 @@
+@php
+    $categories = DB::table('categories')->get();
+    $subcategories = DB::table('subcategories')->get();
+@endphp
+
 
 		<nav class="main_nav">
 			<div class="container">
@@ -14,33 +19,27 @@
 									<div class="cat_menu_text">categories</div>
 								</div>
 
+
+
 								<ul class="cat_menu">
-									<li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-									<li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-									<li class="hassubs">
-										<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-										<ul>
-											<li class="hassubs">
-												<a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-										</ul>
-									</li>
-									<li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+                                    @foreach ($categories as $cat)
+                                        <li><a href="#">{{ $cat->name }}<i class="fas fa-chevron-right"></i></a>
+
+                                            <ul>
+                                                @foreach ($subcategories as $subcat)
+
+                                                @if ( $cat->id == $subcat->category_id)
+                                                <li>
+                                                    <a href="#">{{ $subcat->name }}<i class="fas fa-chevron-right"></i></a>
+                                                </li>
+                                                @endif
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @endforeach
 								</ul>
+
+
 							</div>
 
 							<!-- Main Nav Menu -->
@@ -204,8 +203,8 @@
 
 	<!-- Banner -->
 
-	<div class="banner">
-		<div class="banner_background" style="background-image:url(images/banner_background.jpg)"></div>
+	{{-- <div class="banner">
+		<div class="banner_background" style="background-image:url({{asset('forntend/images/banner_background.jpg')}})"></div>
 		<div class="container fill_height">
 			<div class="row fill_height">
 				<div class="banner_product_image"><img src="{{asset('forntend/images/banner_product.png')}}" alt=""></div>
@@ -219,4 +218,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}

@@ -164,8 +164,9 @@
               <br>
               <br>
               <div class="form-layout-footer">
-                <button class="btn btn-info mg-r-5">Submit Form</button>
-                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-info mg-r-5">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <a href=" {{ route('products.index') }} " class="btn btn-warning">Cancel</a>
               </div><!-- form-layout-footer -->
             </div><!-- form-layout -->
         </div><!-- card -->
