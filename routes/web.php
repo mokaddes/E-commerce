@@ -38,9 +38,11 @@ Route::resource('/', ProductshowController::class);
 Route::resource('index', ProductshowController::class);
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('cart', [ProductshowController::class, 'cart'])->name('cart');
-Route::get('add-to-cart/{id}', [ProductshowController::class, 'addToCart'])->name('add.to.cart');
+Route::post('add-to-cart/{id}', [ProductshowController::class, 'addToCart'])->name('add.to.cart');
+Route::get('add-to-cart/{id}', [ProductshowController::class, 'addToCart'])->name('add.cart');
 Route::patch('update-cart', [ProductshowController::class, 'update'])->name('update.cart');
-Route::delete('remove-from-cart', [ProductshowController::class, 'remove'])->name('remove.from.cart');
+Route::delete('delete-from-cart', [ProductshowController::class, 'delete'])->name('delete.from.cart');
+Route::get('remove-from-cart/{id}', [ProductshowController::class, 'remove'])->name('remove.from.cart');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {

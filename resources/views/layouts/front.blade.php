@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>MH STORE</title>
+<title>
+    @yield('title')
+</title>
 <link rel="icon" href="{!! asset('forntend/images/logo.jpg') !!}"/>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="OneTech shop project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/bootstrap4/bootstrap.min.css')}}">
-<link href="{{asset('forntend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/OwlCarousel2-2.2.1/animate.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/plugins/slick-1.8.0/slick.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/main_styles.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('forntend/styles/responsive.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/styles/bootstrap4/bootstrap.min.css')}}">
+<link href="{{ asset('forntend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/plugins/OwlCarousel2-2.2.1/animate.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/styles/product_styles.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/styles/product_responsive.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/styles/cart_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('forntend/styles/cart_responsive.css') }}">
 
 </head>
 
@@ -29,7 +30,6 @@
 	<header class="header">
 
 		<!-- Top Bar -->
-
 		<div class="top_bar">
 			<div class="container">
 				<div class="row">
@@ -64,9 +64,6 @@
                                         <li>
                                             <a href="#"><div class="user_icon"><img src="{{asset('forntend/images/user.svg')}}" alt=""></div>{{Auth::user()->name}}<i class="fas fa-chevron-down"></i></a>
                                             <ul>
-                                                <li>
-                                                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                                                </li>
                                                 <li><a href=" {{ route('logout') }} " onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();"><i class="icon ion-power"></i> Sign Out</a>
                                                 </li>
@@ -143,9 +140,8 @@
 							</div>
 
 							<!-- Cart -->
-
-                            <div class="dropdown">
-                                <div data-toggle="dropdown">
+							<div class="dropdown active open">
+                                <div class="dropdown-toggle" data-toggle="dropdown" >
                                     <div class="cart">
                                         @php $total = 0 @endphp
                                         @foreach((array) session('cart') as $id => $details)
@@ -163,29 +159,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu" style="width: 200%">
                                     <div class="row total-header-section">
-                                        <div class="col-lg-6 col-sm-6 col-6">
+                                        <div class="col-lg-4 col-sm-4 col-4">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                         </div>
                                         @php $total = 0 @endphp
                                         @foreach((array) session('cart') as $id => $details)
                                             @php $total += $details['price'] * $details['quantity'] @endphp
                                         @endforeach
-                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                        <div class="col-lg-8 col-sm-8 col-8 total-section text-right">
                                             <p>Total: <span class="text-info">$ {{ $total }}</span></p>
                                         </div>
                                     </div>
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
-                                            <div class="row cart-detail">
+                                            <div class="row cart-detail mr-2">
                                                 <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                    <img src="{{ $details['image'] }}" width="60px" />
+                                                    <img src="{{ asset($details['image']) }}" width="60px" />
                                                 </div>
-                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                <div class="col-lg-6 col-sm-6 col-6 cart-detail-product">
                                                     <p>{{ $details['name'] }}
                                                     <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
                                                     </p>
+                                                </div>
+                                                <div class="col-2 text-left" style="padding-right:2px">
+                                                    <a class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -212,12 +211,39 @@
 			</div>
 		</div>
 
-		@include('layouts.menubar')
-    </header>
+        @include('layouts.menubar')
 
+	</header>
 
-	<!-- Characteristics -->
-        @yield('content')
+	<!-- Single Product -->
+
+    @yield('content')
+
+	<!-- Newsletter -->
+
+	<div class="newsletter">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+						<div class="newsletter_title_container">
+							<div class="newsletter_icon"><img src="{{ asset('forntend/images/send.png') }}" alt=""></div>
+							<div class="newsletter_title">Sign up for Newsletter</div>
+							<div class="newsletter_text"><p>...and receive %20 coupon for first shopping.</p></div>
+						</div>
+						<div class="newsletter_content clearfix">
+							<form action="#" class="newsletter_form">
+								<input type="email" class="newsletter_input" required="required" placeholder="Enter your email address">
+								<button class="newsletter_button">Subscribe</button>
+							</form>
+							<div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Footer -->
 
 	<footer class="footer">
@@ -304,15 +330,15 @@
 
 					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
 						<div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        </div>
 						<div class="logos ml-sm-auto">
 							<ul class="logos_list">
-								<li><a href="#"><img src="{{asset('forntend/images/logos_1.png')}}" alt=""></a></li>
-								<li><a href="#"><img src="{{asset('forntend/images/logos_2.png')}}" alt=""></a></li>
-								<li><a href="#"><img src="{{asset('forntend/images/logos_3.png')}}" alt=""></a></li>
-								<li><a href="#"><img src="{{asset('forntend/images/logos_4.png')}}" alt=""></a></li>
+								<li><a href="#"><img src="{{ asset('forntend/images/logos_1.png') }}" alt=""></a></li>
+								<li><a href="#"><img src="{{ asset('forntend/images/logos_2.png') }}" alt=""></a></li>
+								<li><a href="#"><img src="{{ asset('forntend/images/logos_3.png') }}" alt=""></a></li>
+								<li><a href="#"><img src="{{ asset('forntend/images/logos_4.png') }}" alt=""></a></li>
 							</ul>
 						</div>
 					</div>
@@ -331,10 +357,9 @@
 <script src="{{ asset('forntend/plugins/greensock/animation.gsap.min.js') }}"></script>
 <script src="{{ asset('forntend/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
 <script src="{{ asset('forntend/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
-<script src="{{ asset('forntend/plugins/slick-1.8.0/slick.js') }}"></script>
 <script src="{{ asset('forntend/plugins/easing/easing.js') }}"></script>
-<script src="{{ asset('forntend/js/custom.js') }}"></script>
-
+<script src="{{ asset('forntend/js/product_custom.js') }}"></script>
+<script src="{{ asset('forntend/js/cart_custom.js') }}"></script>
 </body>
 
 </html>

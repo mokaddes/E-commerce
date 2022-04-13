@@ -1,7 +1,9 @@
-@extends('layouts.app')
-
+@extends('layouts.front')
+@section('title')
+    Login
+@endsection
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 40px;margin-bottom: 20px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

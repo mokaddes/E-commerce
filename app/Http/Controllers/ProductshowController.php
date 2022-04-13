@@ -61,21 +61,37 @@ class ProductshowController extends Controller
      *
      * @return response()
      */
-    public function addToCart($id)
+    public function addToCart(Request $request,$id)
     {
         $product = Product::findOrFail($id);
 
         $cart = session()->get('cart', []);
+        $quantity = $request->quantity;
 
         if(isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+            if ($quantity) {
+                $cart[$id]['quantity']+= $quantity;
+            } else {
+                $cart[$id]['quantity']++;
+            }
+
         } else {
-            $cart[$id] = [
-                "name" => $product->product_name,
-                "quantity" => 1,
-                "price" => $product->selling_price,
-                "image" => $product->image_one
-            ];
+            if ($quantity) {
+                $cart[$id] = [
+                    "name" => $product->product_name,
+                    "quantity" => $quantity,
+                    "price" => $product->selling_price,
+                    "image" => $product->image_one
+                ];
+            } else {
+                $cart[$id] = [
+                    "name" => $product->product_name,
+                    "quantity" => 1,
+                    "price" => $product->selling_price,
+                    "image" => $product->image_one
+                ];
+            }
+
         }
 
         session()->put('cart', $cart);
@@ -102,6 +118,17 @@ class ProductshowController extends Controller
      *
      * @return response()
      */
+    public function delete(Request $request)
+    {
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'Product removed successfully');
+        }
+    }
     public function remove(Request $request)
     {
         if($request->id) {

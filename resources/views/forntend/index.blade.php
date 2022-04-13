@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-@include('layouts.menubar')
 <div class="banner">
     <div class="banner_background" style="background-image:url({{asset('forntend/images/banner_background.jpg')}})"></div>
     <div class="container fill_height">
@@ -276,7 +275,7 @@
                                                                     <input type="radio" name="product_color" style="background:#000000">
                                                                     <input type="radio" name="product_color" style="background:#999999">
                                                                 </div>
-                                                                <a class="btn btn-primary product_cart_button" href="{{ route('add.to.cart', $item->id) }}">Add To Cart</a>
+                                                                <a class="btn btn-primary product_cart_button" href="{{ route('add.cart', $item->id) }}">Add To Cart</a>
                                                             </div>
                                                         </div>
                                                         <div class="product_fav" ><i class="fas fa-heart-o" style="color: red"></i></div>

@@ -195,11 +195,11 @@
                                     <input type="hidden" name="old_one" value="{{ $product->image_one }}">
                                 </label>
                                 <br>
-                                <img src="#"  id="one" class="d-none">
+                                {{-- <img src="#"  id="one" class="d-none"> --}}
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6">
-                            <img src="{{ asset($product->image_one) }}" width="80px" height="70px"  >
+                            <img src="{{ asset($product->image_one) }}" id="one" width="80px" height="70px"  >
                         </div>
                     </div>
                     <div class="row">
@@ -213,11 +213,11 @@
                                     <input type="hidden" name="old_three" value="{{ $product->image_three }}">
                                 </label>
                                 <br>
-                                <img src="#"  id="two" class="d-none">
+                                {{-- <img src="#"  id="two" class="d-none"> --}}
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6">
-                            <img src="{{ asset($product->image_two) }}" width="80px" height="70px"  >
+                            <img src="{{ asset($product->image_two) }}" id="two" width="80px" height="70px"  >
                         </div>
                     </div>
                     <div class="row">
@@ -231,11 +231,11 @@
                                     <input type="hidden" name="old_three" value="{{ $product->image_three }}">
                                 </label>
                                 <br>
-                                <img src="#"  id="three" class="d-none">
+                                {{-- <img src="#"  id="three" class="d-none"> --}}
                             </div>
                         </div>
                         <div class="col-lg-6 col-sm-6">
-                            <img src="{{ asset($product->image_three) }}" width="80px" height="70px"  >
+                            <img src="{{ asset($product->image_three) }}" id="three" width="80px" height="70px"  >
                         </div>
                     </div>
               <br>

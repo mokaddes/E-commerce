@@ -96,8 +96,8 @@
                         <label class="custom-file">
                             <input type="file" name="image_one" class="custom-file-input" onchange="readURL(this);">
                             <span class="custom-file-control"></span>
-                            <img src="#" id="one">
                         </label>
+                        <img src="#" id="one" class="d-none">
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -106,8 +106,8 @@
                         <label class="custom-file">
                             <input type="file" name="image_two" class="custom-file-input" onchange="readURL2(this);">
                             <span class="custom-file-control"></span>
-                            <img src="#"  id="two">
                         </label>
+                        <img src="#" id="two" class="d-none">
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -116,8 +116,8 @@
                         <label class="custom-file">
                             <input type="file" name="image_three" class="custom-file-input" onchange="readURL3(this);">
                             <span class="custom-file-control"></span>
-                            <img src="#"  id="three">
                         </label>
+                        <img src="#" id="three" class="d-none">
                     </div>
                 </div>
               </div><!-- row -->
@@ -211,7 +211,8 @@
                 $('#one')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }
@@ -225,7 +226,8 @@
                 $('#two')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }
@@ -239,7 +241,8 @@
                 $('#three')
                 .attr('src', e.target.result)
                 .width(80)
-                .height(80);
+                .height(80)
+                .removeClass("d-none");
             };
             reader.readAsDataURL(input.files[0]);
             }
