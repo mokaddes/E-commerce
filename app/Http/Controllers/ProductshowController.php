@@ -15,7 +15,13 @@ class ProductshowController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('forntend.index', compact('products'));
+        $data['main_slider'] = Product::where('main_slider', 1)->first();
+        $data['hot_deal'] = Product::where('hot_deal', 1)->get();
+        $data['best_rated'] = Product::where('best_rated', 1)->get();
+        $data['mid_slider'] = Product::where('mid_slider', 1)->first();
+        $data['hot_new'] = Product::where('hot_new', 1)->get();
+        $data['trend'] = Product::where('trend', 1)->get();
+        return view('forntend.index', compact('products', 'data'));
     }
 
     /**

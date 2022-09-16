@@ -7,9 +7,9 @@
             <div class="banner_product_image"><img src="{{asset('forntend/images/banner_product.png')}}" alt=""></div>
             <div class="col-lg-5 offset-lg-4 fill_height">
                 <div class="banner_content">
-                    <h1 class="banner_text">new era of smartphones</h1>
-                    <div class="banner_price"><span>$530</span>$460</div>
-                    <div class="banner_product_name">Apple Iphone 6s</div>
+                    <h1 class="banner_text"><a href=" {{ route('index.show', $data['main_slider']->id) }}">{{$data['main_slider']->product_name}}</a></h1>
+                    <div class="banner_price"><span>${{ $data['main_slider']->selling_price }}</span>${{ $data['main_slider']->discount_price }}</div>
+                    <div class="banner_product_name">{{ $data['main_slider']->brand->name }}</div>
                     <div class="button banner_button"><a href="#">Shop Now</a></div>
                 </div>
             </div>
@@ -266,9 +266,7 @@
                                                                   {{$item->selling_price}} ৳
                                                                 @endif
                                                             </div>
-                                                            <div class="product_name"><div><a href=" {{ route('index.show', $item->id) }}
-
-                                                                ">{{$item->product_name}}</a></div></div>
+                                                            <div class="product_name"><div><a href=" {{ route('index.show', $item->id) }}">{{$item->product_name}}</a></div></div>
                                                             <div class="product_extras">
                                                                 <div class="product_color">
                                                                     <input type="radio" checked name="product_color" style="background:#b19c83">

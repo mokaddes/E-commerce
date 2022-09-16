@@ -59,7 +59,7 @@
 
                     <div class="cart_buttons">
                         <a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-backward" aria-hidden="true"></i>Continue Shopping</a>
-                        <a href="" class="btn btn-success">Checkout</a>
+                        <a href="{{ route('shipping') }}" class="btn btn-success">Checkout</a>
                     </div>
                 </div>
             </div>

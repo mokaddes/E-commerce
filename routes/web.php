@@ -10,9 +10,11 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\NewslaterController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ProductshowController;
+use App\Http\Controllers\SocialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +27,9 @@ use App\Http\Controllers\ProductshowController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('forntend.index');
-// })->name('frontend');
+Route::get('/', function () {
+    return view('forntend.index');
+})->name('frontend');
 
 
 
@@ -44,7 +46,7 @@ Route::patch('update-cart', [ProductshowController::class, 'update'])->name('upd
 Route::delete('delete-from-cart', [ProductshowController::class, 'delete'])->name('delete.from.cart');
 Route::get('remove-from-cart/{id}', [ProductshowController::class, 'remove'])->name('remove.from.cart');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/admin', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -68,3 +70,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
+Route::get('shipping',[PaymentController::class, 'shipping'])->name('shipping');
+
+Route::get('auth/{provider}', [SocialLoginController::class,'redirectToProvider'])->name('social.provider');
+Route::get('auth/{provider}/callback', [SocialLoginController::class,'handleProviderCallback']);
+
+Route::get('/stripe-payment', [PaymentController::class, 'handleGet']);
+Route::post('/stripe-payment', [PaymentController::class, 'handlePost'])->name('stripe.payment');
